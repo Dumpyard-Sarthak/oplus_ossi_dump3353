@@ -1,0 +1,3 @@
+libSloganJni.oplus.so
+libSloganJni.oplus.so
+libsuperNight_mtk.oplus.so

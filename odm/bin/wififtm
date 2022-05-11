@@ -1,0 +1,15 @@
+#!/vendor/bin/sh
+insmod vendor/lib/modules/qca_cld3_qca6490.ko
+sleep 1
+ifconfig wlan0 up
+sleep 9
+echo 5 > /sys/module/qca6490/parameters/con_mode
+sleep 5
+/vendor/bin/myftm -J -I 0 -B dbs
+sleep 2
+/vendor/bin/myftm -J -I 0 --nss 1 --rateBw 8 -r 26 -f 5180 -a 1 -X 00:03:7F:44:55:69 -Y 00:03:7F:44:55:68 -N 00:03:7F:44:55:71 -x 1
+sleep 2
+/vendor/bin/myftm -J -I 0 --nss 1 --rateBw 8 -r 26 -f 5180 -a 1 -X 00:03:7F:44:55:69 -Y 00:03:7F:44:55:68 -N 00:03:7F:44:55:71 -x 0
+
+ftmdaemon -n -dd
+

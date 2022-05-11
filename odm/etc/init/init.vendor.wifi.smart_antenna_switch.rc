@@ -1,0 +1,28 @@
+service swithToSecondAnt /vendor/bin/sh /odm/bin/init.vendor.wifi.smart_antenna_switch.sh secondaryOne
+    user root
+    group root system misc wifi
+    class late_start
+    disabled
+    oneshot
+
+service swithToPrimaryAnt /vendor/bin/sh /odm/bin/init.vendor.wifi.smart_antenna_switch.sh primaryOne
+    user root
+    group root system misc wifi
+    class late_start
+    disabled
+    oneshot
+
+service initialGPIO /vendor/bin/sh /odm/bin/init.vendor.wifi.smart_antenna_switch.sh initial
+    user root
+    group root system misc wifi
+    class late_start
+    oneshot
+
+on property:vendor.oplus.wifi_smart_antenna=1 && property:ro.build.oplus_nv_id=00011011
+    start swithToSecondAnt
+
+on property:vendor.oplus.wifi_smart_antenna=0 && property:ro.build.oplus_nv_id=00011011
+    start swithToPrimaryAnt
+
+on property:vendor.oplus.wifi_smart_antenna=2 && property:ro.build.oplus_nv_id=00011011
+    start initialGPIO
